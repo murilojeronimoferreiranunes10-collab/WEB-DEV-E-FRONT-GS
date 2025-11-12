@@ -1,76 +1,64 @@
-# 🌐 O Futuro do Trabalho – Conectando pessoas, competências e propósito por meio da tecnologia
+# 🤖 SmartDesk 2050 — Estação Inteligente de Trabalho
 
-## 👥 Integrantes  
-- **Murilo Jeronimo Ferreira Nunes** – RM: 560641  
-- **Bruno Santos Castilho** – RM: 566799  
+## 👥 Integrantes
+- Murilo Jeronimo Ferreira Nunes — RM560641  
+- Bruno Santos Castilho — RM5667994  
 
----
-
-## 📖 Contexto  
-
-Inspirado no desafio proposto pela **Global Solution**, este projeto reflete sobre **como a tecnologia pode transformar as relações profissionais** e promover um **futuro do trabalho mais justo, inclusivo e sustentável**.  
-
-A partir dessa perspectiva, desenvolvemos uma **plataforma web colaborativa**, semelhante ao LinkedIn, voltada à conexão entre profissionais de diferentes áreas.  
-O objetivo é **incentivar o desenvolvimento de competências**, **a troca de experiências** e **a colaboração entre talentos** por meio de uma interface moderna, interativa e acessível.
+## 🌍 Visão Geral
+O **SmartDesk 2050** é uma estação de trabalho inteligente que promove **bem-estar, produtividade e sustentabilidade** por meio de **automação e sensores IoT**.  
+Utilizando um **Arduino Uno**, o sistema monitora **temperatura, umidade, luminosidade, qualidade do ar e presença humana**, ajustando automaticamente o ambiente para oferecer as melhores condições de trabalho.
 
 ---
 
-## 🎯 Objetivo do Projeto  
-
-Desenvolver uma **aplicação web interativa** utilizando **HTML, CSS e JavaScript**, que simula uma **rede profissional voltada ao futuro do trabalho**.  
-
-A plataforma permite **exibir e explorar perfis de profissionais fictícios**, contendo informações pessoais, acadêmicas, profissionais e comportamentais.
-
----
-
-## 💻 Funcionalidades  
-
-### 🔹 Landing Page  
-Página inicial apresentando a proposta da plataforma e uma listagem de **profissionais fictícios**, com dados simulados em uma **Array JavaScript**.
-
-### 🔹 Listagem de Profissionais  
-Cada profissional é apresentado em um **card interativo** contendo:
-- Foto  
-- Nome  
-- Cargo  
-- Principais skills  
-
-### 🔹 Visualização Detalhada  
-Um **SlideShow interativo** exibe informações completas do profissional selecionado:
-- Dados pessoais e acadêmicos  
-- Experiências profissionais e habilidades técnicas  
-- Soft skills e hobbies  
-- Botões de ação:  
-  - 🟢 “Recomendar profissional”  
-  - 🟢 “Enviar mensagem” *(não funcional, apenas ilustrativo)*
-
-### 🔹 Quiz Interativo  
-Um pequeno **quiz sobre o mercado de trabalho**, abordando temas por área, cidade ou tecnologia, para engajar o usuário e promover aprendizado.
+## ⚙️ Tecnologias Utilizadas
+- **Arduino UNO**
+- **Sensor DHT11** — temperatura e umidade  
+- **Sensor LDR** — luminosidade ambiente  
+- **Sensor MQ-135** — qualidade do ar  
+- **Sensor Ultrassônico HC-SR04** — detecção de presença  
+- **Servo Motor** — controle de persiana/luz  
+- **LED RGB** — indicador visual de status ambiental  
+- **Buzzer** — alertas sonoros  
+- **Protoboard e jumpers**
 
 ---
 
-## 🧩 Tecnologias Utilizadas  
-
-- **HTML5** – estrutura da aplicação  
-- **CSS3** – layout responsivo com **Flexbox**, animações e transições  
-- **JavaScript** – manipulação dinâmica dos dados e interatividade  
-
----
-
-## 🎨 Requisitos da Interface  
-
-✔ Layout com **Flexbox**  
-✔ **Animações, transformações e transições** em elementos interativos  
-✔ **Cards** de profissionais dinâmicos  
-✔ **SlideShow** detalhado com informações completas  
-✔ **Array** com **10 perfis simulados**  
-✔ **Quiz temático** sobre o futuro do trabalho  
-✔ **Repositório Git** com **mínimo de 10 commits**
+## 💡 Funcionalidades
+✅ Monitora **temperatura**, **umidade**, **luminosidade** e **qualidade do ar** em tempo real  
+✅ Detecta **presença humana** com sensor ultrassônico  
+✅ Ajusta **persianas/luzes automaticamente** via servo motor  
+✅ Exibe status ambiental com **LED RGB**:
+- 🟢 **Verde:** ambiente ideal  
+- 🟡 **Amarelo:** pouca luz  
+- 🔴 **Vermelho:** ambiente ruim (calor, baixa umidade ou ar poluído)  
+✅ Emite **alertas sonoros** com o buzzer em caso de ambiente inadequado ou pausa prolongada
 
 ---
 
-## 🧠 Conceito Central  
+## 🧩 Esquema de Montagem
 
-> “Conectar pessoas, competências e propósito através da tecnologia é o primeiro passo para construir um futuro do trabalho mais humano, inclusivo e colaborativo.”
+Abaixo, o circuito completo montado no Tinkercad, com todos os sensores e atuadores conectados ao Arduino Uno:
+
+- 🔌 Conexões Principais
+- Componente	Pinos	Descrição
+- DHT11	VCC → 5V / GND → GND / S → 2	Sensor de temperatura e umidade
+- LDR	Um terminal → 5V / outro → A0 + resistor 10kΩ → GND	Sensor de luminosidade
+- MQ135	VCC → 5V / GND → GND / AOUT → A1	Sensor de qualidade do ar
+- HC-SR04	VCC → 5V / GND → GND / TRIG → 6 / ECHO → 7	Sensor de presença
+- Servo	Sinal → 3 / VCC → 5V / GND → GND	Movimento automático
+- Buzzer	+ → 12 / - → GND	Alerta sonoro
+- LED RGB (cátodo comum)	R → 9 / G → 10 / B → 11 / comum → GND (via resistores 220Ω)
 
 ---
+
+## 🎯 Impacto e Futuro
+
+O projeto SmartDesk 2050 propõe uma abordagem sustentável e inteligente para o ambiente de trabalho do futuro, utilizando tecnologia acessível para promover:
+
+- Saúde e bem-estar no ambiente laboral
+
+- Eficiência energética com automação ambiental
+
+- Inclusão e adaptação ao futuro do trabalho
+
+![Circuito SmartDesk 2050](Imagem.png)
