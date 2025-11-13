@@ -5,6 +5,7 @@
 #define ECHO 7
 #define LDR A0
 #define LM35 A2
+#define MQ135 A1
 #define BUZZER A3
 #define RED_PIN 9
 #define GREEN_PIN 10
@@ -26,6 +27,7 @@ void setup() {
   pinMode(ECHO, INPUT);
   pinMode(LDR, INPUT);
   pinMode(LM35, INPUT);
+  pinMode(MQ135, INPUT);
   pinMode(BUZZER, OUTPUT);
   pinMode(RED_PIN, OUTPUT);
   pinMode(GREEN_PIN, OUTPUT);
@@ -33,7 +35,7 @@ void setup() {
   
   servoMotor.attach(SERVO_PIN);
 
-  Serial.println("=== SMARTDESK 2050 ===");
+  Serial.println("=== SMARTDESK 2050 (Simulacao Tinkercad) ===");
   Serial.println("Calibrando sensor de luz (6 segundos)...");
   startTime = millis();
 }
@@ -57,11 +59,9 @@ void setRGB(int r, int g, int b) {
   analogWrite(BLUE_PIN, b);
 }
 
-// === Função para ler e converter o LDR ===
 int lerLuzPorcentagem() {
   int raw = analogRead(LDR);
 
-  // Durante a calibração inicial (6 s)
   if (!calibrated) {
     if (raw < ldrMin) ldrMin = raw;
     if (raw > ldrMax) ldrMax = raw;
@@ -75,7 +75,6 @@ int lerLuzPorcentagem() {
     }
   }
 
-  // Mapeia para 0–100%
   int pct = map(raw, ldrMin, ldrMax, 0, 100);
   pct = constrain(pct, 0, 100);
 
@@ -87,42 +86,51 @@ int lerLuzPorcentagem() {
   return pct;
 }
 
-// === LOOP PRINCIPAL ===
+float lerQualidadeAr() {
+  int valorMQ = analogRead(MQ135);
+  return valorMQ; // leitura bruta simulada
+}
+
+float simularUmidade(int luzPct) {
+  // Simula umidade: escuro = mais úmido, claro = menos úmido
+  if (luzPct == 0) return 70.0;
+  else if (luzPct == 50) return 50.0;
+  else return 30.0;
+}
+
 void loop() {
-  // Lê sensores
   float distancia = medirDistancia();
   int luzPct = lerLuzPorcentagem();
 
-  int leituraLM35 = analogRead(LM35);
-  float temperatura = (leituraLM35 * 5.0 * 100.0) / 1023.0;
+  float temperatura = (analogRead(LM35) * 5.0 * 100.0) / 1023.0; // temperatura LM35
+  float umidade = simularUmidade(luzPct); // simula umidade
+  float qualidadeAr = lerQualidadeAr();   // MQ135
 
   // Servo — abre se alguém perto (< 20 cm)
   if (distancia > 0 && distancia < 20) servoMotor.write(90);
   else servoMotor.write(0);
 
-  // RGB e buzzer
+  // RGB e buzzer baseado na temperatura
   if (temperatura > 30) {
-    setRGB(255, 0, 0);  // Vermelho — quente
+    setRGB(255, 0, 0);  // quente
     digitalWrite(BUZZER, HIGH);
   } else if (luzPct == 0) {
-    setRGB(0, 0, 255);  // Azul — escuro
+    setRGB(0, 0, 255);  // escuro
     digitalWrite(BUZZER, LOW);
   } else if (luzPct == 50) {
-    setRGB(255, 255, 0); // Amarelo — média luz
+    setRGB(255, 255, 0); // média luz
     digitalWrite(BUZZER, LOW);
   } else {
-    setRGB(0, 255, 0);  // Verde — luz alta
+    setRGB(0, 255, 0);  // luz alta
     digitalWrite(BUZZER, LOW);
   }
 
   // Serial monitor
-  Serial.print("Dist: ");
-  Serial.print(distancia);
-  Serial.print(" cm  |  Temp: ");
-  Serial.print(temperatura, 1);
-  Serial.print(" C  |  Luz: ");
-  Serial.print(luzPct);
-  Serial.println("%");
+  Serial.print("Dist: "); Serial.print(distancia); Serial.print(" cm  |  ");
+  Serial.print("Temp: "); Serial.print(temperatura, 1); Serial.print(" C  |  ");
+  Serial.print("Umid: "); Serial.print(umidade, 1); Serial.print("%  |  ");
+  Serial.print("Luz: "); Serial.print(luzPct); Serial.print("%  |  ");
+  Serial.print("Qualidade Ar: "); Serial.println(qualidadeAr);
 
-  delay(700);
+  delay(1000);
 }
